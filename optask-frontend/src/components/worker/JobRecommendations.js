@@ -2,6 +2,8 @@ const JobRecommendations = () => {
     const jobs = [
       { title: "Front-End Developer", description: "Remote opportunity to build React applications." },
       { title: "Graphic Designer", description: "Create engaging graphics for digital marketing." },
+      { title: "Blockchain Developer", description: "Build DeFi smart contracts." },
+      { title: "Backend Engineer", description: "Join a dynamic team of developers to develop community centered solutions." },
     ];
   
     return (

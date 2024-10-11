@@ -7,11 +7,18 @@ const Footer = () => (
       
       {/* Links to About, Contact, Terms, Privacy */}
       <div className="flex justify-center mt-2 space-x-4">
-        {["About", "Contact", "Terms of Service", "Privacy Policy"].map((item, index) => (
-          <a href="#" key={index} className="hover:text-blue-400" aria-label={item}>
-            {item}
-          </a>
-        ))}
+        <a href="/about" className="hover:text-blue-400" aria-label="About">
+          About
+        </a>
+        <a href="/contact" className="hover:text-blue-400" aria-label="Contact">
+          Contact
+        </a>
+        <a href="/terms" className="hover:text-blue-400" aria-label="Terms of Service">
+          Terms of Service
+        </a>
+        <a href="/privacy" className="hover:text-blue-400" aria-label="Privacy Policy">
+          Privacy Policy
+        </a>
       </div>
       
       {/* Social Media  */}

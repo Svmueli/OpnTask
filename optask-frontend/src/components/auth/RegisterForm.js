@@ -141,7 +141,7 @@ const Signup = () => {
             Submit
           </button>
         </form>
-        <h3 className="text-center text-gray-600 mt-4">Or</h3>
+        {/* <h3 className="text-center text-gray-600 mt-4">Or</h3>
         <div className="flex justify-center mt-4">
           <button className="bg-gray-800 text-white py-2 px-4 rounded-md hover:bg-gray-700 transition duration-300">
             Sign up with Github
@@ -149,7 +149,7 @@ const Signup = () => {
         </div>
         <div className="flex justify-center mt-4">
           <div id="signInDiv" className="gsignIn"></div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

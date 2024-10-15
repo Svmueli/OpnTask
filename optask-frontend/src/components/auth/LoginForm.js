@@ -85,7 +85,7 @@ const Login = () => {
                 localStorage.setItem('token', JSON.stringify(response.access_token));
                 localStorage.setItem('refresh_token', JSON.stringify(response.refresh_token));
                 localStorage.setItem('user', JSON.stringify(user));
-                router.push('/dashboard');
+                router.push('/employer');
                 toast.success('Login successful');
             } else {
                 toast.error('Something went wrong');

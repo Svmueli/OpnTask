@@ -1,9 +1,9 @@
-import LoginForm from '../../components/auth/LoginForm';
+import Login from '../../components/auth/LoginForm';
 
-const Login = () => (
+const LoginForm = () => (
   <div className="flex justify-center items-center min-h-screen bg-gray-100">
-    <LoginForm />
+    <Login />
   </div>
 );
 
-export default Login;
+export default LoginForm;

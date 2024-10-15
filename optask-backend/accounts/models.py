@@ -8,6 +8,11 @@ from accounts.managers import UserManager
 
 AUTH_PROVIDERS ={'email':'email', 'google':'google', 'github':'github', 'linkedin':'linkedin'}
 
+ROLE_CHOICES = (
+    ('employer', 'Employer'),
+    ('worker', 'Worker'),
+)
+
 class User(AbstractBaseUser, PermissionsMixin):
     id = models.BigAutoField(primary_key=True, editable=False) 
     email = models.EmailField(
@@ -22,6 +27,17 @@ class User(AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField(auto_now_add=True)
     last_login = models.DateTimeField(auto_now=True)
     auth_provider=models.CharField(max_length=50, blank=False, null=False, default=AUTH_PROVIDERS.get('email'))
+    role = models.CharField(max_length=50, choices=ROLE_CHOICES)
+    
+    # Additional optional fields
+    phone_number = models.CharField(max_length=15, blank=True, null=True, verbose_name=_("Phone Number"))
+    profile_picture = models.ImageField(upload_to='profile_pictures/', blank=True, null=True, verbose_name=_("Profile Picture"))
+    company = models.CharField(max_length=255, blank=True, null=True, verbose_name=_("Company"))
+    website = models.URLField(max_length=200, blank=True, null=True, verbose_name=_("Website"))
+    location = models.CharField(max_length=255, blank=True, null=True, verbose_name=_("Location"))
+    skills = models.TextField(blank=True, null=True, verbose_name=_("Skills"))
+    portfolio = models.URLField(max_length=500, blank=True, null=True, verbose_name=_("Portfolio Link"))
+    
 
     USERNAME_FIELD = "email"
 

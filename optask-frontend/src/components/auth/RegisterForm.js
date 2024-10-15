@@ -12,6 +12,7 @@ const Signup = () => {
     last_name: "",
     password: "",
     password2: "",
+    role: "",
   });
   const [error, setError] = useState("");
 
@@ -136,6 +137,20 @@ const Signup = () => {
               onChange={handleOnchange}
               required
             />
+          </div>
+          <div className="form-group">
+            <label className="block text-sm font-medium text-gray-700">Role:</label>
+            <select
+              className="mt-1 p-2 border border-gray-300 rounded-md w-full focus:ring-blue-500 focus:border-blue-500"
+              name="role"
+              value={formdata.role}
+              onChange={handleOnchange}
+              required
+            >
+              <option value="">Select Role</option>
+              <option value="worker">Worker</option>
+              <option value="employer">Employer</option>
+            </select>
           </div>
           <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-300">
             Submit

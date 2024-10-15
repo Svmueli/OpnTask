@@ -1,10 +1,10 @@
 from ast import Expression
 from multiprocessing import context
 from django.shortcuts import render
-from rest_framework.generics import GenericAPIView
+from rest_framework.generics import GenericAPIView, RetrieveUpdateAPIView
 from rest_framework.response import Response
 from accounts.models import OneTimePassword
-from accounts.serializers import PasswordResetRequestSerializer,LogoutUserSerializer, UserRegisterSerializer, LoginSerializer, SetNewPasswordSerializer
+from accounts.serializers import PasswordResetRequestSerializer,LogoutUserSerializer, UserRegisterSerializer, LoginSerializer, SetNewPasswordSerializer, UserProfileSerializer
 from rest_framework import status
 from .utils import send_generated_otp_to_email
 from django.utils.http import urlsafe_base64_decode
@@ -31,7 +31,12 @@ class RegisterView(GenericAPIView):
             }, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class UserProfileUpdateView(RetrieveUpdateAPIView):
+    serializer_class = UserProfileSerializer
+    permission_classes = [IsAuthenticated]
 
+    def get_object(self):
+        return self.request.user
 
 
 class VerifyUserEmail(GenericAPIView):

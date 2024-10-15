@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import EmployerProfile from '../../components/employer/EmployerProfile';
 import JobPostForm from '../../components/employer/JobPostForm';
 import JobManagement from '../../components/employer/JobManagement';
@@ -6,6 +6,15 @@ import ApplicantList from '../../components/employer/ApplicantList';
 
 const EmployerDashboard = () => {
   const [searchTerm, setSearchTerm] = useState('');
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    // Fetch user details from localStorage
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
@@ -17,7 +26,9 @@ const EmployerDashboard = () => {
         
         {/* Welcome Note and Search Bar */}
         <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center mb-6">
-          <h1 className="text-2xl font-bold text-green-700 mb-4 lg:mb-0">Welcome, Employer!</h1>
+          <h1 className="text-2xl font-bold text-green-700 mb-4 lg:mb-0">
+            Welcome, {user ? user.full_name : 'Employer'}!
+          </h1>
           
           <div className="flex items-center space-x-4 w-full lg:w-1/2">
             <input
@@ -39,7 +50,7 @@ const EmployerDashboard = () => {
         {/* Profile, Job Post Form, and Applicant List */}
         <div className="flex flex-col lg:flex-row lg:space-x-6">
           <div className="flex-1 lg:w-1/3 mb-6 lg:mb-0 bg-gradient-to-br from-green-100 to-blue-200 p-4 rounded-lg shadow-md border border-green-300">
-            <EmployerProfile />
+            <EmployerProfile user={user} />
           </div>
           <div className="flex-1 lg:w-2/3">
             <div className="bg-gradient-to-br from-indigo-50 to-yellow-100 p-4 rounded-lg shadow-md border border-yellow-200 mb-6">

@@ -21,7 +21,7 @@ class UserRegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model=User
-        fields = ['email', 'first_name', 'last_name', 'password', 'password2']
+        fields = ['email', 'first_name', 'last_name', 'password', 'password2', 'role']
 
     def validate(self, attrs):
         password=attrs.get('password', '')
@@ -36,20 +36,50 @@ class UserRegisterSerializer(serializers.ModelSerializer):
             email=validated_data['email'],
             first_name=validated_data.get('first_name'),
             last_name=validated_data.get('last_name'),
-            password=validated_data.get('password')
+            password=validated_data.get('password'),
+            role=validated_data.get('role')
             )
         return user
+    
+class UserProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = [
+            'email', 'first_name', 'last_name', 
+            'phone_number', 'company', 'website', 'location', 'profile_picture', 'role'
+        ]
+        read_only_fields = ['email']  # Email should not be updated
+
+    def update(self, instance, validated_data):
+        instance.first_name = validated_data.get('first_name', instance.first_name)
+        instance.last_name = validated_data.get('last_name', instance.last_name)
+        instance.phone_number = validated_data.get('phone_number', instance.phone_number)
+        instance.company = validated_data.get('company', instance.company)
+        instance.website = validated_data.get('website', instance.website)
+        instance.location = validated_data.get('location', instance.location)
+        instance.profile_picture = validated_data.get('profile_picture', instance.profile_picture)
+        instance.save()
+        return instance
+
 
 class LoginSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(max_length=155, min_length=6)
     password=serializers.CharField(max_length=68, write_only=True)
     full_name=serializers.CharField(max_length=255, read_only=True)
+    phone_number=serializers.CharField(max_length=15, read_only=True)
+    role=serializers.CharField(max_length=50, read_only=True)
+    profile_picture=serializers.ImageField(read_only=True)
+    company=serializers.CharField(max_length=255, read_only=True)
+    website=serializers.URLField(max_length=200, read_only=True)
+    location=serializers.CharField(max_length=255, read_only=True)
+    skills=serializers.CharField(read_only=True)
+    portfolio=serializers.URLField(max_length=500, read_only=True)
     access_token=serializers.CharField(max_length=255, read_only=True)
     refresh_token=serializers.CharField(max_length=255, read_only=True)
 
     class Meta:
         model = User
-        fields = ['email', 'password', 'full_name', 'access_token', 'refresh_token']
+        fields = ['email', 'password', 'full_name', 'phone_number', 'role', 'profile_picture', 'company', 'website', 'location', 'skills', 'portfolio','access_token', 'refresh_token']
 
     
 
@@ -66,6 +96,14 @@ class LoginSerializer(serializers.ModelSerializer):
         return {
             'email':user.email,
             'full_name':user.get_full_name,
+            'phone_number':user.phone_number,
+            'role':user.role,
+            'profile_picture':user.profile_picture,
+            'company':user.company,
+            'website':user.website,
+            'location':user.location,
+            'skills':user.skills,
+            'portfolio':user.portfolio,
             "access_token":str(tokens.get('access')),
             "refresh_token":str(tokens.get('refresh'))
         }
